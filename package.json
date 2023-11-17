@@ -1,0 +1,11 @@
+{
+  "name": "subgraph-workshop",
+  "version": "1.0.0",
+  "description": "Demo repository for demonstrating subgraph development",
+  "keywords": ["workshop", "subgraph", "api3"],
+  "author": "giancarlo@api3.org",
+  "license": "MIT",
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.60.0"
+  }
+}
