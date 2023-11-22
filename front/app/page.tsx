@@ -9,8 +9,10 @@ export const metadata: Metadata = {
 
 export default function Home() {
     return (
-      <main>
-        <TableComponent />
+      <main className="flex justify-center items-center h-screen bg-white">
+        <div className='w-2/3'> 
+          <TableComponent />
+        </div>
       </main>
     )
   }

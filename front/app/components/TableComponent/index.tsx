@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { parseEther } from "ethers";
+import { formatEther } from "ethers";
 
 import { dataFeedIds } from "../../lib/constants";
 import { getClient } from '../../lib/utils';
@@ -43,7 +43,11 @@ function TableComponent() {
                 let allTimestamps: Array<number> = []
 
                 outputData.map((entry) => {
-                    allValsSum += entry.value;
+                    allValsSum += Number(
+                        formatEther(
+                            entry.value
+                        )
+                    );
                     allValsCount++;
                     allTimestamps.push(entry.timestamp);
                 });
@@ -51,7 +55,7 @@ function TableComponent() {
                 allData.push([
                     index,
                     ticker,
-                    (allValsSum / allValsCount).toPrecision(4),
+                    (allValsSum / allValsCount).toFixed(4),
                     Math.max(...allTimestamps)
                 ]);
 
@@ -76,21 +80,21 @@ function TableComponent() {
 
     return (
         <div>
-            <div className="flex justify-center items-center h-screen">
-                <table className="table-auto border-collapse border border-gray-400">
-                    <thead>
+            <div>
+                <table className="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th className="border border-gray-300">Ticker</th>
-                            <th className="border border-gray-300">Median Value</th>
-                            <th className="border border-gray-300">Timestamp</th>
+                            <th className="px-6 py-3">Ticker</th>
+                            <th className="px-6 py-3">Median Value</th>
+                            <th className="px-6 py-3">Timestamp</th>
                         </tr>
                     </thead>
                     <tbody>
                         {tableData.map((entry) => (
-                            <tr key={entry[0]}>
-                                <td className="border border-gray-300">{entry[1]}</td>
-                                <td className="border border-gray-300">{entry[2]}</td>
-                                <td className="border border-gray-300">
+                            <tr key={entry[0]} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{entry[1]}</td>
+                                <td className="px-6 py-4">{`$ ${entry[2]}`}</td>
+                                <td className="px-6 py-4">
                                     {new Date(entry[3]*1000).toLocaleString()}
                                 </td>
                             </tr>
@@ -98,8 +102,8 @@ function TableComponent() {
                     </tbody>
                 </table>
             </div>
-            <div>
-                <button className="bg-red-300 text-white p-3" onClick={fetchData}>
+            <div className='mt-8 flex justify-center'>
+                <button className="bg-red-300 text-black p-3" onClick={fetchData}>
                     Reload
                 </button>
             </div>
